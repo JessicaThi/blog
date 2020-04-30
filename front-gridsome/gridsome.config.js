@@ -5,21 +5,21 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: 'Gridsome',
+  siteName: "My first blog",
   plugins: [
     {
-      use: '@gridsome/source-strapi',
+      use: "@gridsome/source-strapi",
       options: {
-        apiURL: 'http://localhost:1337',
+        apiURL: "http://localhost:1337",
         queryLimit: 1000, // Defaults to 100
-        // contentTypes: ['article', 'user'],
+        contentTypes: ["restaurant"],
         // // Possibility to login with a Strapi user,
         // // when content types are not publicly available (optional).
         // loginData: {
         //   identifier: '',
         //   password: ''
         // }
-      }
-    }
-  ]
-}
+      },
+    },
+  ],
+};

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "places",
+  "info": {
+    "name": "place"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "city": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "country": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "articles": {
+      "via": "places",
+      "collection": "article",
+      "dominant": true
+    }
+  }
+}

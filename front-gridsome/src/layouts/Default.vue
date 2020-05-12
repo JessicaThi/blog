@@ -1,15 +1,35 @@
 <template>
-  <div class="layout">
-    <header class="header">
-      <strong>
-        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/about/">About</g-link>
+  <div class="layout bg-gray-100 antialiased">
+    <header class="header bg-black text-gray-100">
+      <nav class="nav container sm:pxi-0 mx-auto">
+        <div class="flex justify-between mx-3 py-3">
+          <div>
+            <g-link class="nav__link uppercase text-sm font-medium mr-4" to="/"
+              >Home</g-link
+            >
+            <g-link class="nav__link uppercase text-sm font-medium" to="/about/"
+              >About</g-link
+            >
+          </div>
+          <div class="flex">
+            <!-- <font-awesome :icon="['fas', 'sun']" /> -->
+            <div class="mr-4">
+              <font-awesome :icon="['fas', 'moon']" />
+            </div>
+            <a href="instagram.com">
+              <font-awesome :icon="['fab', 'instagram']" />
+            </a>
+          </div>
+        </div>
       </nav>
+      <div
+        class="container mx-auto flex flex-col justify-center items-center text-center py-3"
+      >
+        <g-image alt="Example image" src="~/favicon.png" width="135" />
+        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
+      </div>
     </header>
-    <slot/>
+    <slot />
   </div>
 </template>
 
@@ -23,12 +43,13 @@ query {
 
 <style>
 body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  margin:0;
-  padding:0;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
   line-height: 1.5;
 }
-
+/* 
 .layout {
   max-width: 760px;
   margin: 0 auto;
@@ -46,5 +67,5 @@ body {
 
 .nav__link {
   margin-left: 20px;
-}
+} */
 </style>

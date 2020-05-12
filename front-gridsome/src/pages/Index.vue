@@ -1,11 +1,9 @@
 <template>
   <Layout>
-
-    <!-- Learn how to use images here: https://gridsome.org/docs/images -->
-    <g-image alt="Example image" src="~/favicon.png" width="135" />
-
-    <h1>Mon premier blog</h1>
-    <!-- <div>
+    <div class="container sm:pxi-0 mx-auto overflow-x-hidden">
+      <!-- Learn how to use images here: https://gridsome.org/docs/images -->
+      <h1>Mon premier blog</h1>
+      <!-- <div>
      <div>
        <g-image src="~/favicon.png" />
      </div>
@@ -16,23 +14,51 @@
        <p>#bbtea</p>
      </div>
     </div> -->
+      <div class="grid grid-cols-3 gap-4">
+        <div
+          class="article flex-post p-3"
+          v-for="article in $page.strapiArticle.edges"
+          :key="article.id"
+        >
+          <g-link :to="article.node.slug" class="article__link">
+            <div
+              class="article__img w-full h-64 bg-center bg-no-repeat bg-cover rounded"
+              :style="{
+                'background-image': `url(http://localhost:1337${article.node.images[0].url})`,
+              }"
+            ></div>
+            <!-- <g-image :src="`http://localhost:1337/uploads/${image.hash}.jpeg`" width="500" height="500" fit="contain" /> -->
+            <div class="article__body pt-1">
+              <!-- <g-link :to="article.node.path" class="article__link"></g-link> -->
+              <span
+                v-for="category in article.node.categories"
+                :key="category.id"
+                class="uppercase text-xs font-medium tracking-wide text-red-500"
+                >{{ category.name }}</span
+              >
+              <h2 class="article__title text-2xl">
+                {{ article.node.name }}
+              </h2>
+              <p class="article__description text-base pt-1">
+                {{ article.node.description }}
+              </p>
+              <p v-for="place in article.node.places" :key="place.id" class="text-base">
+                📍Lieu : {{ place.city }},
+                {{ place.country }}
+              </p>
+            </div>
+            <div class="article__tag pt-4">
+              <span
+                v-for="origin in article.node.origins"
+                :key="origin.id"
+                class="text-sm rounded-full py-2 px-3 font-medium text-yellow-200 bg-orange-400 bg-opacity-85"
+                >#{{ origin.name }}</span
+              >
+            </div>
+          </g-link>
+        </div>
 
-    <div class="article"
-        v-for="restaurant in $page.StrapiRestaurant.edges"
-        :key="restaurant.id"
-    >
-      <div v-for="image in restaurant.node.images" :key="image.id">
-        <div class="article__img" :style="{ 'background-image': `url(http://localhost:1337/uploads/${image.hash}.jpeg)` }"></div>
-       <!-- <g-image :src="`http://localhost:1337/uploads/${image.hash}.jpeg`" width="500" height="500" fit="contain" /> -->
-     </div>
-      <div class="article__body">
-        <!-- <g-link :to="article.node.path" class="article__link"></g-link> -->
-        <h2 class="article__title">{{ restaurant.node.name }}</h2>
-        <p class="article__description">{{ restaurant.node.description }}</p>
-      </div>
-    </div>
-
-    <!-- <h1>Hello, world!</h1>
+        <!-- <h1>Hello, world!</h1>
 
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo! Dolores, aperiam non officia eos quod asperiores
@@ -42,18 +68,31 @@
       <a href="https://gridsome.org/docs/" target="_blank" rel="noopener">Gridsome Docs</a>
       <a href="https://github.com/gridsome/gridsome" target="_blank" rel="noopener">GitHub</a>
     </p> -->
-
+      </div>
+    </div>
   </Layout>
 </template>
 <page-query>
 query {
-  StrapiRestaurant: allStrapiRestaurant {
+  strapiArticle: allStrapiArticle {
     edges {
       node {
+        slug
+        path
         name
         description
         images { 
-          hash
+          url
+        }
+        origins {
+          name
+        }
+        categories {
+          name
+        }
+        places {
+          city
+          country
         }
       }
     }
@@ -64,6 +103,11 @@ query {
 export default {
   metaInfo: {
     title: "Blog food - LumyFoody"
+  },
+  computed: {
+    imageUrl() {
+      return `${process.env.GRIDSOME_API_URL}${this.image.url}`;
+    }
   }
 };
 </script>
@@ -73,20 +117,20 @@ export default {
   margin-right: 1rem;
 }
 
-.article {
+/* .article {
   border: 1px solid black;
-}
+} */
 
-.article__img {
+/* .article__img {
   width: 500px;
   height: 500px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-}
+} */
 
-.g-image {
+/* .g-image {
   width: 500px;
   height: 500px;
-}
+} */
 </style>

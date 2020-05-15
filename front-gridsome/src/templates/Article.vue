@@ -16,15 +16,24 @@
           :key="place.id"
           class="text-base text-gray-600 pt-4 pb-2"
         >
-          📍{{ place.city }}, {{ place.country }}
+          {{ place.city }}, {{ place.country }}
           <span class="text-sm"> ・ {{ $page.article.createdAt }}</span>
         </p>
       </div>
       <g-image :src="imageUrl" class="mx-auto max-w-screen-lg p-4"></g-image>
       <div class="mx-auto max-w-screen-md">
         <p class="text-base">{{ $page.article.description }}</p>
-        <agile>
-          <!-- <g-image :src="`http://localhost:1337${image.url}`"></g-image> -->
+        <!-- <g-image :src="`http://localhost:1337${image.url}`"></g-image> -->
+        <div
+          v-for="image in $page.article.images"
+          :key="image.url"
+          class="h-64 "
+          :style="{
+            'background-image': `url(http://localhost:1337${image.url})`,
+          }"
+        ></div>
+        <p>c'est bizarre</p>
+        <slick ref="slick" :options="slickOptions">
           <div
             v-for="image in $page.article.images"
             :key="image.url"
@@ -33,8 +42,7 @@
               'background-image': `url(http://localhost:1337${image.url})`,
             }"
           ></div>
-          <p>c'est bizarre</p>
-        </agile>
+        </slick>
         <div class="article__tag pt-4">
           <span
             v-for="origin in $page.article.origins"
@@ -71,24 +79,23 @@ query ($id: ID!) {
 }
 </page-query>
 <script>
-import { VueAgile } from "vue-agile";
+import Slick from "vue-slick";
 
 export default {
-  components: {
-    VueAgile,
-  },
-  metaInfo() {
-    return {
-      title: this.$page.article.name,
-    };
-  },
+  components: { Slick },
   computed: {
     imageUrl() {
-      return `${process.env.GRIDSOME_API_URL}${
-        this.$page.article.images[0].url
-      }`;
-    },
+      return `${process.env.GRIDSOME_API_URL}${this.$page.article.images[0].url}`;
+    }
   },
+  data() {
+    return {
+      slickOptions: {
+        slidesToShow: 3
+        // Any other options that can be got from plugin documentation
+      }
+    };
+  }
 };
 </script>
 

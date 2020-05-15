@@ -45,5 +45,11 @@ module.exports = {
         component: "./src/templates/Article.vue",
       },
     ],
+    StrapiOrigin: [
+      {
+        path: "/tags/:name",
+        component: "./src/templates/Tag.vue",
+      },
+    ],
   },
 };
